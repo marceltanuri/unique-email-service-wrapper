@@ -1,0 +1,3 @@
+Bundle-Name: unique-email-user-service-wrapper
+Bundle-SymbolicName: com.liferay.mtanuri.user.service.wrapper
+Bundle-Version: 1.0.0
