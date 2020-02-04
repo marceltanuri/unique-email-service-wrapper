@@ -47,10 +47,12 @@ public class UserLocalServiceOverride extends UserLocalServiceWrapper {
 
 		User user = super.getUser(userId);
 
-		emailAddress = UserUtil.getUniqueEmail(user.getCompanyId(), emailAddress, userId);
+		String uniqueEmailAddress = UserUtil.getUniqueEmail(user.getCompanyId(), emailAddress, userId);
+
+		UserUtil.setEmailIntoCustomField(emailAddress, serviceContext);
 
 		return super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset, reminderQueryQuestion,
-				reminderQueryAnswer, screenName, emailAddress, facebookId, openId, hasPortrait, portraitBytes,
+				reminderQueryAnswer, screenName, uniqueEmailAddress, facebookId, openId, hasPortrait, portraitBytes,
 				languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId, male,
 				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
 				groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds, serviceContext);

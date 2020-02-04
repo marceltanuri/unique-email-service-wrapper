@@ -2,7 +2,12 @@ package com.liferay.docs.serviceoverride;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserUtil {
 
@@ -21,9 +26,7 @@ public class UserUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Searching duplicates for " + emailAddress);
 			}
-			if (getUserIdByEmailAddressWrapper(companyId, emailAddress) == 0) {
-				isUnique = true;
-			}
+			isUnique = getUserIdByEmailAddressWrapper(companyId, emailAddress) == 0;
 			emailHitsCounter++;
 		}
 		return emailAddress;
@@ -48,6 +51,13 @@ public class UserUtil {
 			}
 		}
 		return userIdByEmailAddress;
+	}
+
+	public static ServiceContext setEmailIntoCustomField(String emailAddress, ServiceContext serviceContext) {
+		Map<String, Serializable> expandoBridgeAttributes = new HashMap<String, Serializable>();
+		expandoBridgeAttributes.put("repeatable-email", emailAddress);
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		return serviceContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UserUtil.class);

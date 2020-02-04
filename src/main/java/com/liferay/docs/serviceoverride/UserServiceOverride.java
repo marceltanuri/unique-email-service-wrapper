@@ -46,12 +46,14 @@ public class UserServiceOverride extends UserServiceWrapper {
 			_log.debug("Overriding UserService addUser method");
 		}
 
-		emailAddress = UserUtil.getUniqueEmail(companyId, emailAddress);
+		String uniqueEmailAddress = UserUtil.getUniqueEmail(companyId, emailAddress);
+		UserUtil.setEmailIntoCustomField(emailAddress, serviceContext);
 
-		return super.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress,
-				facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+		return super.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName,
+				uniqueEmailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId,
+				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
+				userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail,
+				serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UserServiceOverride.class);
